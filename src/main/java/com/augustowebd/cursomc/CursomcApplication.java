@@ -21,9 +21,6 @@ public class CursomcApplication implements CommandLineRunner {
 	@Autowired
 	private ProdutoRepository proRepo;
 	
-//	private Produto
-	
-
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
@@ -46,6 +43,5 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		catRepo.saveAll(Arrays.asList(cInfo, cEscr));
 		proRepo.saveAll(Arrays.asList(pComp, pImpressora, pMouse));
-		
 	}
 }
