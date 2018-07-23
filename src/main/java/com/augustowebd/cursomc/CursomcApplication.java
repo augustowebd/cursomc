@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.augustowebd.cursomc.domain.Categoria;
 import com.augustowebd.cursomc.domain.Cidade;
+import com.augustowebd.cursomc.domain.Cliente;
+import com.augustowebd.cursomc.domain.Endereco;
 import com.augustowebd.cursomc.domain.Estado;
 import com.augustowebd.cursomc.domain.Produto;
+import com.augustowebd.cursomc.domain.enuns.TipoCliente;
 import com.augustowebd.cursomc.repositories.CategoriaRepository;
 import com.augustowebd.cursomc.repositories.CidadeRepository;
+import com.augustowebd.cursomc.repositories.ClienteRepository;
+import com.augustowebd.cursomc.repositories.EnderecoRepository;
 import com.augustowebd.cursomc.repositories.EstadoRepository;
 import com.augustowebd.cursomc.repositories.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CidadeRepository cidRepo;
+	
+	@Autowired
+	private ClienteRepository cliRepo;
+	
+	@Autowired
+	private EnderecoRepository endRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -68,5 +79,17 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		estRepo.saveAll(Arrays.asList(eMinasGer, eSaoPaulo));
 		cidRepo.saveAll(Arrays.asList(cidUberland, cidCampinas, cidSaoPaulo));
+		/* -*- */
+
+		Cliente clMariaSilva = new Cliente(null, "Maria Silva", "maria.silva@gmail.com", "12345678909", TipoCliente.PESSOA_FISICA);
+		clMariaSilva.getTelefones().addAll(Arrays.asList("3333-4444", "3333-5555"));
+		
+		Endereco eRuaFlores = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "35220831", clMariaSilva, cidUberland);
+		Endereco eAvenMatos = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "3877012", clMariaSilva, cidSaoPaulo);
+		
+		clMariaSilva.getEnderecos().addAll(Arrays.asList(eRuaFlores, eAvenMatos));
+		
+		cliRepo.saveAll(Arrays.asList(clMariaSilva));
+		endRepo.saveAll(Arrays.asList(eRuaFlores, eAvenMatos));
 	}
 }
